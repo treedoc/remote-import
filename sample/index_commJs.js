@@ -1,4 +1,4 @@
-#!/usr/bin/env node -r esm
+#!/usr/bin/env -S node -r esm
 
 const RemoteImport = require('../lib/RemoteImport').default;
 RemoteImport.init({refreshDuration:10000});
