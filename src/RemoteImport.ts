@@ -41,7 +41,7 @@ export default class RemoteImport {
     this.config = {...this.config, ...config};
     fs.mkdirSync(this.config.cachePath, {recursive: true});
     this.config.cachePath = fs.realpathSync(this.config.cachePath);
-    console.log(`RemoteImport initialized: config=${JSON.stringify(this.config)}`);
+    console.error(`RemoteImport initialized: config=${JSON.stringify(this.config)}`);
     const module = Module as any;
     if (this.nodeResolveFilename)
       return;
@@ -52,10 +52,10 @@ export default class RemoteImport {
   // Can't use member variable as this is not accessible when method is invoked in callback. Arrow function is good
   resolveFilename = (request: string, parent: NodeModule, isMain: boolean, options: any) => {
     try {
-      //  console.log(`request: ${request}; parent.filename: ${parent?.filename}; isMain: ${isMain}; options: ${options}; cachPath: ${this.config.cachePath}`)
+      //  console.error(`request: ${request}; parent.filename: ${parent?.filename}; isMain: ${isMain}; options: ${options}; cachPath: ${this.config.cachePath}`)
       return this.nodeResolveFilename!(this.resolveModule(request, parent?.filename), parent, isMain, options);
     } catch(e) {
-      console.log(e);
+      console.error(e);
       throw e;
     }
   }
@@ -84,7 +84,7 @@ export default class RemoteImport {
       if (meta && new Date().getTime() - meta.loadTime < this.config.refreshDuration)
         return fileName;
     }
-    console.log(`Downloading: ${url}, to cache folder: ${fileName}`);
+    console.error(`Downloading: ${url}, to cache folder: ${fileName}`);
     fs.mkdirSync(this.config.cachePath, {recursive: true});
 
     const reqHeaders: IncomingHttpHeaders = {};
@@ -93,20 +93,20 @@ export default class RemoteImport {
     if (meta?.lastModified)
       reqHeaders["if-modified-since"] = meta.lastModified;
     const res = syncReq("GET", url, { headers: reqHeaders})
-    console.log(`statusCode: ${res.statusCode}`);
+    console.error(`statusCode: ${res.statusCode}`);
     if (res.statusCode === 304) {
       this.writeMetaFile(fileName, meta!.setLoadTime(new Date().getTime()));
       return fileName;
     }
 
     if (res.statusCode !== 200) {
-      console.log(`Error occurred: ${res.getBody}`);
+      console.error(`Error occurred: ${res.getBody}`);
       return fileName;
     }
 
     const encoding = res.headers["content-encoding"];
     const content = encoding === "br" ? decompress(res.getBody() as Buffer) : res.body;
-    // console.log(`res.headers=${TD.stringify(res.headers, " ")}, encoding=${encoding}; content="${content}`);
+    // console.error(`res.headers=${TD.stringify(res.headers, " ")}, encoding=${encoding}; content="${content}`);
     fs.writeFileSync(fileName, content);
     this.writeMetaFile(fileName, new CacheMeta(url, new Date().getTime(), res.headers["last-modified"], res.headers.etag as string));
     return fileName;
@@ -123,7 +123,7 @@ export default class RemoteImport {
     try {
       return Object.assign(new CacheMeta(), JSON.parse(fs.readFileSync(metaFile, {encoding: "utf-8"})));
     } catch (e) {
-      console.log(`Error reading meta file:${metaFile}`, e);
+      console.error(`Error reading meta file:${metaFile}`, e);
     }
     return null;
   }

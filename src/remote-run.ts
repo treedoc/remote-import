@@ -1,7 +1,5 @@
 #!/usr/bin/env -S node -r esm
 
-console.log(process.argv)
-
 class RemoteRun {
   run() {
     if (process.argv.length < 3) {
