@@ -1,4 +1,4 @@
-<a href="https://github.com/treedoc/remote-import"><img alt="GitHub Actions status" src="https://github.com/treedoc/remote-import/workflows/Node%20CI/badge.svg"></a> [![codecov](https://codecov.io/gh/treedoc/remote-import/branch/master/graph/badge.svg)](https://codecov.io/gh/treedoc/remote-import)
+<a href="https://github.com/treedoc/remote-import"><img alt="GitHub Actions status" src="https://github.com/treedoc/remote-import/workflows/Node%20CI/badge.svg"></a> [![codecov](https://codecov.io/gh/treedoc/remote-import/branch/master/graph/badge.svg)](https://codecov.io/gh/treedoc/remote-import)</a> <a href='https://www.npmjs.com/package/remote-import' target="_blank"><img alt="npm" src="https://img.shields.io/npm/v/remote-import"></a>
 
 # REMOTE-IMPORT
 

@@ -30,7 +30,7 @@ export class RemoteImportConfig {
 
 export default class RemoteImport {
   config = new RemoteImportConfig();
-  nodeResolveFilename?: Function;
+  nodeResolveFilename?: (request: string, parent: NodeModule, isMain: boolean, options: any) => void
   
   static instance = new RemoteImport();
   static get() { return RemoteImport.instance; } 
@@ -87,12 +87,12 @@ export default class RemoteImport {
       reqHeaders["if-modified-since"] = meta.lastModified;
     const res = syncReq("GET", url, { headers: reqHeaders})
     console.log(`statusCode: ${res.statusCode}`);
-    if (res.statusCode == 304) {
+    if (res.statusCode === 304) {
       this.writeMetaFile(fileName, meta!.setLoadTime(new Date().getTime()));
       return fileName;
     }
 
-    if (res.statusCode != 200) {
+    if (res.statusCode !== 200) {
       console.log(`Error occurred: ${res.getBody}`);
       return fileName;
     }
@@ -101,7 +101,7 @@ export default class RemoteImport {
     const content = encoding === "br" ? decompress(res.getBody() as Buffer) : res.body;
     // console.log(`res.headers=${TD.stringify(res.headers, " ")}, encoding=${encoding}; content="${content}`);
     fs.writeFileSync(fileName, content);
-    this.writeMetaFile(fileName, new CacheMeta(url, new Date().getTime(), res.headers["last-modified"], res.headers["etag"] as string));
+    this.writeMetaFile(fileName, new CacheMeta(url, new Date().getTime(), res.headers["last-modified"], res.headers.etag as string));
     return fileName;
   }
 

@@ -1,5 +1,6 @@
-//import RemoteImport from '../RemoteImport';
+// import RemoteImport from '../RemoteImport';
 
+// Follow test doesn't work
 describe('RemoteImport', () => {
   test('Fresh Import', async () => {
     const RemoteImport = require('../../lib/RemoteImport');
