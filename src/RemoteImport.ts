@@ -3,12 +3,13 @@ import { Module } from 'module';
 import syncReq from 'sync-request';
 import { IncomingHttpHeaders } from 'http';
 import * as fs from 'fs';
+import * as os from 'os';
 
 import decompress = require("brotli/decompress")
 // Following won't work in JEST which will cause error: "Uncaught ReferenceError: Browser is not defined"
 // import { decompress } from "brotli";
 
-const CACHE_PATH = "/tmp/cache";
+const CACHE_PATH = os.homedir() + "/.remote-import/cache";
 const META_EXT = ".json";
 
 class CacheMeta {
@@ -38,6 +39,7 @@ export default class RemoteImport {
 
   init(config: Partial<RemoteImportConfig> = {}) {
     this.config = {...this.config, ...config};
+    fs.mkdirSync(this.config.cachePath, {recursive: true});
     this.config.cachePath = fs.realpathSync(this.config.cachePath);
     console.log(`RemoteImport initialized: config=${JSON.stringify(this.config)}`);
     const module = Module as any;

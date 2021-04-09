@@ -1,12 +1,12 @@
 {
   "name": "remote-import",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Import modules from a URL with a customized module loader.",
-  "main": "lib/RemoteImports.js",
-  "types": "lib/RemoteImports.d.ts",
+  "main": "lib/RemoteImport.js",
+  "types": "lib/RemoteImport.d.ts",
   "scripts": {
     "test_jest": "jest --config jestconfig.json",
-    "test": "./sample/index_commJs.js && ./sample/index_esm.js && ./sample/index_preLoad.js && ./sample/index_withoutEsmPreload.js",
+    "test": "npm install && ./sample/index_commJs.js && ./sample/index_esm.js && ./sample/index_preLoad.js && ./sample/index_withoutEsmPreload.js",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
