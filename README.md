@@ -1,4 +1,4 @@
-<a href="https://github.com/treedoc/remote-import"><img alt="GitHub Actions status" src="https://github.com/treedoc/remote-import/workflows/Node%20CI/badge.svg"></a> [![codecov](https://codecov.io/gh/treedoc/remote-import/branch/master/graph/badge.svg)](https://codecov.io/gh/treedoc/remote-import)</a> <a href='https://www.npmjs.com/package/remote-import' target="_blank"><img alt="npm" src="https://img.shields.io/npm/v/remote-import"></a>
+<a href="https://github.com/treedoc/remote-import"><img alt="GitHub Actions status" src="https://github.com/treedoc/remote-import/workflows/Node%20CI/badge.svg"></a> [![codecov](https://codecov.io/gh/treedoc/remote-import/branch/main/graph/badge.svg)](https://codecov.io/gh/treedoc/remote-import)</a> <a href='https://www.npmjs.com/package/remote-import' target="_blank"><img alt="npm" src="https://img.shields.io/npm/v/remote-import"></a>
 
 # REMOTE-IMPORT
 
@@ -40,7 +40,7 @@ When `Deno` just debuted, I was so excited with the ability to import any module
   ```
   node -r esm -r remote-import
   ```
-- For more living examples, please refer to folder [sample](https://github.com/treedoc/remote-import/sample)
+- For more living examples, please refer to folder [sample](https://github.com/treedoc/remote-import/tree/main/sample)
 
 ## Future Enhancement
 - Add URL rules to white list URL and indicate if the URL is immutable for security reason.
