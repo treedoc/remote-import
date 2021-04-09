@@ -53,24 +53,29 @@ export default class RemoteImport {
   resolveFilename = (request: string, parent: NodeModule, isMain: boolean, options: any) => {
     try {
       //  console.log(`request: ${request}; parent.filename: ${parent?.filename}; isMain: ${isMain}; options: ${options}; cachPath: ${this.config.cachePath}`)
-      if (request?.startsWith("https:") || request?.startsWith("http")) {
-        request = this.getOrDownloadUrl(request);
-      } else if (parent.filename?.startsWith(this.config.cachePath)) {        
-        const meta = this.readMeta(parent.filename);
-        if (meta) {
-          request = new URL(request, new URL(meta.url)).toString();
-          request = this.getOrDownloadUrl(request);
-        } else
-          console.error(`Error load parent meta file for parent.filename=${parent.filename}`)
-      }
-      return this.nodeResolveFilename!(request, parent, isMain, options);
+      return this.nodeResolveFilename!(this.resolveModule(request, parent?.filename), parent, isMain, options);
     } catch(e) {
       console.log(e);
       throw e;
     }
   }
 
-  private getOrDownloadUrl(url: string) {
+  public resolveModule(module: string, parentFileName?: string): string {
+    if (module?.startsWith("https:") || module?.startsWith("http"))
+      return this.getOrDownloadUrl(module);
+    
+    if (parentFileName?.startsWith(this.config.cachePath)) {        
+      const meta = this.readMeta(parentFileName);
+      if (meta) {
+        module = new URL(module, new URL(meta.url)).toString();
+        return this.getOrDownloadUrl(module);
+      } else
+        console.error(`Error load parent meta file for parent.filename=${parentFileName}`)
+    }
+    return module;
+  }
+
+  private getOrDownloadUrl(url: string): string {
     const fileName = this.urlToFileName(url);
 
     let meta: CacheMeta | null = null;
