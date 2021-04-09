@@ -1,0 +1,9 @@
+{
+  "transform": {
+    "^.+\\.ts?$": "ts-jest"
+  },
+  "testRegex": "src/.*\\.spec\\.ts?$",
+  "moduleFileExtensions": ["js", "ts", "json", "node"],
+  "coverageDirectory": "./coverage/",
+  "collectCoverage": true
+}
