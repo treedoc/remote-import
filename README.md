@@ -1,13 +1,13 @@
 <a href="https://github.com/treedoc/remote-import"><img alt="GitHub Actions status" src="https://github.com/treedoc/remote-import/workflows/Node%20CI/badge.svg"></a> 
 <a href='https://www.npmjs.com/package/remote-import' target="_blank"><img alt="npm" src="https://img.shields.io/npm/v/remote-import"></a>
 
-# REMOTE-IMPORT
+# REMOTE-IMPORT (REMOTE-RUN)
 
-Import modules from a URL with a customized module loader. It supports remote import in transitive-dependent modules.
+Import or run modules from a URL with a customized node module loader. It supports remote import in transitive-dependent modules.
 
 ## Background
 
-When `Deno` just debuted, I was so excited with the ability to import any modules from a remote URL so that we can get rid of the cumbersome `packages.json` setup and bloated `node-modules` folders. If not because of the NPM ecosystem, I'd completely move to `Deno`. Unfortunately, `Deno` is not well integrated with the existing NPM ecosystem. I still have to stick with NPM. After a bit of research, I build this small library to bring the ability to import any module from a URL. There're few existing solutions, but non of them satisfy my requirement. Most of them support the first level of remote import. They won't work if there're remote imports within the imported module. This library solved this issue by customizing Node module loader logic. It overrides `Module._resolveFilename()`, so that whenever a remote URL is detected, it will download the remote module and cache it to local. 
+When `Deno` just debuted, I was excited with the ability to import any modules from a remote URL so that we can get rid of the cumbersome `packages.json` setup and bloated `node-modules` folders. If not because of the NPM ecosystem, I'd completely move to `Deno`. Unfortunately, `Deno` is not well integrated with the existing NPM ecosystem. I still have to stick with NPM. After a bit of research, I build this small library/CLI to bring the ability to import or run modules from a URL. There're few existing solutions, but non of them satisfy my requirement. Most of them support the first level of remote import. They won't work if there're remote imports within the imported module. This library solved this issue by customizing Node module loader logic. It overrides `Module._resolveFilename()`, so that whenever a remote URL is detected, it will download the remote module and cache it to local. 
 
 ## Features
 - Support import with URL start with  `http://` and `https://`
@@ -17,6 +17,7 @@ When `Deno` just debuted, I was so excited with the ability to import any module
 - Customizable local cache folder
 - Customizable cache refresh duration
 - Support Http head of `if-match` and `if-modified-since` for efficient file downloads.
+- Remote-run is a cli tool to execute javascript from remote URL. 
 
 ## Usage
 
@@ -41,7 +42,7 @@ When `Deno` just debuted, I was so excited with the ability to import any module
   ```
   node -r esm -r remote-import
   ```
-- Directly invoke JS on remote URL:
+- Use remote-run to directly invoke JS on remote URL:
   ```
   npm install -g remote-import
   remote-run https://raw.githubusercontent.com/treedoc/remote-import/main/sample/sample.js args
@@ -50,6 +51,7 @@ When `Deno` just debuted, I was so excited with the ability to import any module
 
 ## Future Enhancement
 - Add URL rules to white list URL and indicate if the URL is immutable for security reason.
+- Support typescript
 
 ## Contributions
 
