@@ -1,4 +1,5 @@
-<a href="https://github.com/treedoc/remote-import"><img alt="GitHub Actions status" src="https://github.com/treedoc/remote-import/workflows/Node%20CI/badge.svg"></a> [![codecov](https://codecov.io/gh/treedoc/remote-import/branch/main/graph/badge.svg)](https://codecov.io/gh/treedoc/remote-import)</a> <a href='https://www.npmjs.com/package/remote-import' target="_blank"><img alt="npm" src="https://img.shields.io/npm/v/remote-import"></a>
+<a href="https://github.com/treedoc/remote-import"><img alt="GitHub Actions status" src="https://github.com/treedoc/remote-import/workflows/Node%20CI/badge.svg"></a> 
+<a href='https://www.npmjs.com/package/remote-import' target="_blank"><img alt="npm" src="https://img.shields.io/npm/v/remote-import"></a>
 
 # REMOTE-IMPORT
 
@@ -32,13 +33,18 @@ When `Deno` just debuted, I was so excited with the ability to import any module
   _.add(1,2);
 
   ```
-- If the imported module is ES6 module, make sure to add the following parameter when launching the app:
+- If the dependent modules contains is ES6 modules, make sure to add the following parameter when launching the app:
   ```
   node -r esm 
   ```
-- It can also be used as preload module, e.g.
+- It can also be used as pre-load module, e.g.
   ```
   node -r esm -r remote-import
+  ```
+- Directly invoke JS on remote URL:
+  ```
+  npm install -g remote-import
+  remote-run https://raw.githubusercontent.com/treedoc/remote-import/main/sample/sample.js args
   ```
 - For more living examples, please refer to folder [sample](https://github.com/treedoc/remote-import/tree/main/sample)
 
