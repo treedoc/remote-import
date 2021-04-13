@@ -3,7 +3,7 @@
 
 # REMOTE-IMPORT (REMOTE-RUN)
 
-Import or run modules from a URL with a customized node module loader. It supports remote import in transitive-dependent modules.
+Import remote modules from URLs. Implemented with a customized node module loader so that it supports url imports in transitive-dependent modules. Also provides a CLI tool `remote-run` to run remote js file directly. 
 
 ## Background
 
