@@ -1,6 +1,6 @@
 {
   "name": "remote-import",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Import modules from a URL with a customized module loader.",
   "main": "lib/RemoteImport.js",
   "bin": {
