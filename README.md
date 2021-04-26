@@ -7,7 +7,7 @@ Import remote modules from URLs. Implemented with a customized node module loade
 
 ## Background
 
-When `Deno` just debuted, I was excited with the ability to import any modules from a remote URL so that we can get rid of the cumbersome `packages.json` setup and bloated `node-modules` folders. If not because of the NPM ecosystem, I'd completely move to `Deno`. Unfortunately, `Deno` is not well integrated with the existing NPM ecosystem. I still have to stick with NPM. After a bit of research, I build this small library/CLI to bring the ability to import or run modules from a URL. There're few existing solutions, but non of them satisfy my requirement. Most of them support the first level of remote import. They won't work if there're remote imports within the imported module. This library solved this issue by customizing Node module loader logic. It overrides `Module._resolveFilename()`, so that whenever a remote URL is detected, it will download the remote module and cache it to local. 
+When `Deno` just launched, I was excited with the ability to import modules from any remote URL so that we can get rid of the cumbersome `packages.json` setup and bloated `node-modules` folders. If not because of the NPM ecosystem, I'd completely move to `Deno`. Unfortunately, `Deno` is not well integrated with the existing NPM ecosystem. I still have to stick with NPM. After a bit of research, I build this small library/CLI to bring the ability to import or run modules from a URL. There're few existing solutions, but non of them satisfy my requirement. Most of them support the first level of remote import. They won't work if there're remote imports within the imported module. This library solved this issue by customizing Node module loader logic. It overrides `Module._resolveFilename()`, so that whenever a remote URL is detected, it will download the remote module and cache it to local. 
 
 ## Features
 - Support import with URL start with  `http://` and `https://`
@@ -16,18 +16,18 @@ When `Deno` just debuted, I was excited with the ability to import any modules f
 - Support ES6 modules with the pre-loaded library: [esm](https://www.npmjs.com/package/esm). `node -r esm `
 - Customizable local cache folder
 - Customizable cache refresh duration
-- Support Http head of `if-match` and `if-modified-since` for efficient file downloads.
-- Remote-run is a cli tool to execute javascript from remote URL. 
+- Support Http head of `if-match` and `if-modified-since` for efficient file downloads and caching
+- Remote-run is a cli tool to execute javascript from remote URL
 
 ## Usage
 
 ### Install & Setup
-- npm install: `npm i remote-import`
+- npm install: `npm i remote-import` or install globally: `npm i --global remote-import`
 - In Javascript/Typescript:
   ```
   // During app initialization
   import RemoteImport from 'remote-import';
-  RemoteImport.get().init();
+  RemoteImport.get().init({refreshDuration:10000});  // Optional, call init only if custom configuration is needed
 
   // Anywhere else
   import _ from "https://jspm.dev/lodash";
@@ -40,14 +40,18 @@ When `Deno` just debuted, I was excited with the ability to import any modules f
   ```
 - It can also be used as pre-load module, e.g.
   ```
-  node -r esm -r remote-import
+  node -r remote-import
   ```
+  Note it doesn't work if combined with esm on REPL (Not sure why): e.g. `node -r esm -r remote-import` is not working
+  if esm is need in REPL, pre-load esm only `node -r esm` and manually run require("remote-import") inside REPL.
+  
 - Use remote-run to directly invoke JS on remote URL:
   ```
   npm install -g remote-import
   remote-run https://raw.githubusercontent.com/treedoc/remote-import/main/sample/sample.js args
   ```
 - For more living examples, please refer to folder [sample](https://github.com/treedoc/remote-import/tree/main/sample)
+- Custom configuration by calling `RemoteImport.get().init(config)` refer to class [RemoteImportConfig](https://github.com/treedoc/remote-import/blob/d8839de1adab6cad00dad0d4106e389550d426b5/src/RemoteImport.ts#L25)
 
 ## Future Enhancement
 - Add URL rules to white list URL and indicate if the URL is immutable for security reason.
