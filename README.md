@@ -3,23 +3,23 @@
 
 # REMOTE-IMPORT (REMOTE-RUN)
 
-Import remote modules from URLs. Implemented with a customized node module loader so that it supports url imports in transitive-dependent modules. Also provides a CLI tool `remote-run` to run remote js file directly. 
+Import remote modules from URLs. It's implemented with a customized node module loader so that it supports URL imports in transitive-dependent modules. It also provides a CLI tool `remote-run` to run remote js file directly. 
 
 ## Background
 
 When `Deno` just launched, I was excited with the ability to import modules from any remote URL so that we can get rid of the cumbersome `packages.json` setup and bloated `node-modules` folders. If not because of the NPM ecosystem, I'd completely move to `Deno`. Unfortunately, `Deno` is not well integrated with the existing NPM ecosystem. I still have to stick with NPM. After a bit of research, I build this small library/CLI to bring the ability to import or run modules from a URL. 
 
-There're few existing solutions, but non of them satisfy my requirement. Most of them support the first level of remote import. They won't work if there're remote imports within the imported module. This library solved this issue by customizing Node module loader logic. It overrides `Module._resolveFilename()`, so that whenever a remote URL is detected, it will download the remote module and cache it to local. 
+There're few existing solutions, but none of them satisfy my requirement. Most of them support the first level of remote import. They won't work if there're remote imports within the imported module. This library solved this issue by customizing Node module loader logic. It overrides `Module._resolveFilename()`, so that whenever a remote URL is detected, it will download the remote module and cache it locally. 
 
 ## Features
-- Support import with URL start with  `http://` and `https://`
+- Support import with URL starts with  `http://` and `https://`
 - Support transitive imports in the dependent modules
 - Support import CommonJs modules
 - Support ES6 modules with the pre-loaded library: [esm](https://www.npmjs.com/package/esm). `node -r esm `
 - Customizable local cache folder
 - Customizable cache refresh duration
 - Support Http head of `if-match` and `if-modified-since` for efficient file downloads and caching
-- Remote-run is a cli tool to execute javascript from remote URL
+- Remote-run is a CLI tool to execute javascript from a remote URL
 
 ## Usage
 
@@ -36,7 +36,7 @@ There're few existing solutions, but non of them satisfy my requirement. Most of
   _.add(1,2);
 
   ```
-- If the dependent modules contains is ES6 modules, make sure to add the following parameter when launching the app:
+- If the dependent modules contain ES6 modules, make sure to add the following parameter when launching the app:
   ```
   node -r esm 
   ```
@@ -45,21 +45,21 @@ There're few existing solutions, but non of them satisfy my requirement. Most of
   node -r remote-import
   ```
   Note it doesn't work if combined with esm on REPL (Not sure why): e.g. `node -r esm -r remote-import` is not working
-  if esm is need in REPL, pre-load esm only `node -r esm` and manually run require("remote-import") inside REPL.
+  if esm is needed in REPL, a pre-load esm only `node -r esm` and manually run require("remote-import") inside REPL.
   
 - Command line tools
-  - Installation:  `npm install -g remote-import`
+  - Installation:  `npm install -g remote-import` or `yarn global add remote-import`
   - `remote-run`: Directly invoke JS on remote URL:
     ```
     npm install -g remote-import
     remote-run https://raw.githubusercontent.com/treedoc/remote-import/main/sample/sample.js args
     ```
   - `remote-node`: Start a node REPL session with remote import support
-- For more living examples, please refer to folder [sample](https://github.com/treedoc/remote-import/tree/main/sample)
+- For more live examples, please refer to folder [sample](https://github.com/treedoc/remote-import/tree/main/sample)
 - Custom configuration by calling `RemoteImport.get().init(config)` refer to class [RemoteImportConfig](https://github.com/treedoc/remote-import/blob/d8839de1adab6cad00dad0d4106e389550d426b5/src/RemoteImport.ts#L25)
 
 ## Future Enhancement
-- Add URL rules to white list URL and indicate if the URL is immutable for security reason.
+- Add URL rules to allow list URL and indicate if the URL is immutable for security reasons.
 - Support typescript
 
 ## Contributions
