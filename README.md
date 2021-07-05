@@ -7,7 +7,9 @@ Import remote modules from URLs. Implemented with a customized node module loade
 
 ## Background
 
-When `Deno` just launched, I was excited with the ability to import modules from any remote URL so that we can get rid of the cumbersome `packages.json` setup and bloated `node-modules` folders. If not because of the NPM ecosystem, I'd completely move to `Deno`. Unfortunately, `Deno` is not well integrated with the existing NPM ecosystem. I still have to stick with NPM. After a bit of research, I build this small library/CLI to bring the ability to import or run modules from a URL. There're few existing solutions, but non of them satisfy my requirement. Most of them support the first level of remote import. They won't work if there're remote imports within the imported module. This library solved this issue by customizing Node module loader logic. It overrides `Module._resolveFilename()`, so that whenever a remote URL is detected, it will download the remote module and cache it to local. 
+When `Deno` just launched, I was excited with the ability to import modules from any remote URL so that we can get rid of the cumbersome `packages.json` setup and bloated `node-modules` folders. If not because of the NPM ecosystem, I'd completely move to `Deno`. Unfortunately, `Deno` is not well integrated with the existing NPM ecosystem. I still have to stick with NPM. After a bit of research, I build this small library/CLI to bring the ability to import or run modules from a URL. 
+
+There're few existing solutions, but non of them satisfy my requirement. Most of them support the first level of remote import. They won't work if there're remote imports within the imported module. This library solved this issue by customizing Node module loader logic. It overrides `Module._resolveFilename()`, so that whenever a remote URL is detected, it will download the remote module and cache it to local. 
 
 ## Features
 - Support import with URL start with  `http://` and `https://`
@@ -45,11 +47,14 @@ When `Deno` just launched, I was excited with the ability to import modules from
   Note it doesn't work if combined with esm on REPL (Not sure why): e.g. `node -r esm -r remote-import` is not working
   if esm is need in REPL, pre-load esm only `node -r esm` and manually run require("remote-import") inside REPL.
   
-- Use remote-run to directly invoke JS on remote URL:
-  ```
-  npm install -g remote-import
-  remote-run https://raw.githubusercontent.com/treedoc/remote-import/main/sample/sample.js args
-  ```
+- Command line tools
+  - Installation:  `npm install -g remote-import`
+  - `remote-run`: Directly invoke JS on remote URL:
+    ```
+    npm install -g remote-import
+    remote-run https://raw.githubusercontent.com/treedoc/remote-import/main/sample/sample.js args
+    ```
+  - `remote-node`: Start a node REPL session with remote import support
 - For more living examples, please refer to folder [sample](https://github.com/treedoc/remote-import/tree/main/sample)
 - Custom configuration by calling `RemoteImport.get().init(config)` refer to class [RemoteImportConfig](https://github.com/treedoc/remote-import/blob/d8839de1adab6cad00dad0d4106e389550d426b5/src/RemoteImport.ts#L25)
 
