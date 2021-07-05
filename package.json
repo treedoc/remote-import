@@ -1,6 +1,6 @@
 {
   "name": "remote-import",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Import modules from a URL with a customized module loader.",
   "main": "lib/RemoteImport.js",
   "bin": {
@@ -53,7 +53,8 @@
     "sync-request": "^6.1.0"
   },
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "src/**/*"
   ],
   "jest": {
     "testEnvironment": "node"
