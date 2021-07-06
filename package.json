@@ -1,11 +1,11 @@
 {
   "name": "remote-import",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Import modules from a URL with a customized module loader.",
   "main": "lib/RemoteImport.js",
   "bin": {
     "remote-run": "./lib/remote-run.js",
-    "remote-node": "./src/remote-node.sh"
+    "remote-node": "./lib/remote-node.js"
   },
   "types": "lib/RemoteImport.d.ts",
   "scripts": {
