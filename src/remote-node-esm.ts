@@ -10,5 +10,5 @@ const r = repl.start("rn> ");
 r.setupHistory(path.join(homedir(),'.node_repl_history'), () => null)
 // r.context.require = require("esm")(module/*, options*/);  // Seems this is equivalent as runInContext
 // use esm-wallaby instead of esm as a work around: https://github.com/standard-things/esm/issues/866
-vm.runInContext("require('remote-import')", r.context);
+vm.runInContext("require=require('esm-wallaby')(module); require('remote-import')", r.context);
 console.log('example: _ = require("https://jspm.dev/lodash").default;')

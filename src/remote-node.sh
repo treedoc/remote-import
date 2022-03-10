@@ -19,8 +19,8 @@ color() { echo "\e[$1m" ; }
 
 CODE_COLOR="$(color $BOLD\;$GREEN\;$BG_BLACK)"
 
-# echo -e "Please run $CODE_COLOR import 'remote-import' $ENDCOLOR after node REPL started."
-# echo -e "To import remote module, only CommonJs require is supported, e.g.: "
-# echo -e "$CODE_COLOR const _ = require('https://jspm.dev/lodash').default; $ENDCOLOR"
-# NODE_PATH=$(npm root -g) node -r esm "$@"
+echo -e "Please run $CODE_COLOR import 'remote-import' $ENDCOLOR after node REPL started."
+echo -e "To import remote module, only CommonJs require is supported, e.g.: "
+echo -e "$CODE_COLOR const _ = require('https://jspm.dev/lodash').default; $ENDCOLOR"
+NODE_PATH=$(npm root -g) node -r esm "$@"
 NODE_PATH=$(npm root -g) node -r esm -e "require('remote-import')" -i "$@"

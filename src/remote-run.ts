@@ -13,7 +13,7 @@ class RemoteRun {
     
     let url = process.argv[2];
     if (!url.startsWith("http://") && !url.startsWith("https://"))
-    url = path.resolve(url);  // Local module, relative to current directory
+      url = path.resolve(url);  // Local module, relative to current directory
     require(url);
   }
 }
